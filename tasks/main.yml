@@ -45,6 +45,14 @@
   shell: ln -s {{symfony2_project_root}}/shared/app/config/parameters.ini {{symfony2_project_root}}/releases/{{symfony2_project_release}}/app/config/parameters.ini creates={{symfony2_project_root}}/releases/{{symfony2_project_release}}/app/config/parameters.ini
   when: parameters_ini.stat.exists
 
+- name: Check if shared/app/config/parameters.yml exists.
+  stat: path={{symfony2_project_root}}/shared/app/config/parameters.yml
+  register: parameters_ini
+
+- name: Create symlink for app/config/parameters.yml from shared directory.
+  shell: ln -s {{symfony2_project_root}}/shared/app/config/parameters.yml {{symfony2_project_root}}/releases/{{symfony2_project_release}}/app/config/parameters.yml creates={{symfony2_project_root}}/releases/{{symfony2_project_release}}/app/config/parameters.yml
+  when: parameters_ini.stat.exists
+
 - name: Check if composer exists.
   stat: path={{symfony2_project_composer_path}}/composer.phar
   register: composer_file
